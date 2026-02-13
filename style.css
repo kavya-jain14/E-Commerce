@@ -179,6 +179,18 @@ body {
     width: 70px;
 }
 
+/****cart container***/
+.cart-container {
+    font-size: 1.1rem;
+    display: flex;
+}
+
+.cart-container i {
+    font-size: 1rem;
+}
+
+/**************************************navigation*****************************************/
+
 
 
 
