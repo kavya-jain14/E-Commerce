@@ -434,9 +434,6 @@ body {
 
 }
 
-.card-nested {
-
-}
 
 .card-nested p{
     margin: 5px;
@@ -523,7 +520,7 @@ body {
     justify-self: flex-end;
 }
 .discount_Contaienr{
-    /* border: 2px solid red; */
+     border: 2px solid red; 
 }
 .discount_Contaienr a{
     padding: 5px 10px;
