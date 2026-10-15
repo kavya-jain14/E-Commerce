@@ -555,3 +555,8 @@ body {
     outline: none;
     background-color: rgb(255,255,255,0.4);
 }
+[hidden] { display: none !important; }
+.search-icon { border: 0; cursor: pointer; }
+:focus-visible { outline: 3px solid #f3a847; outline-offset: 3px; }
+#search-status { padding-inline: 24px; }
+@media (prefers-reduced-motion: reduce) { .sidebar-container-navigation { transition: none; } }

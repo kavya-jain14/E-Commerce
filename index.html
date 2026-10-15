@@ -38,10 +38,10 @@
                 <select class="search-select">
                     <option>All</option>
                 </select>
-                <input type="text" class="search-input" />
-                <div class="search-icon">
+                <input type="search" class="search-input" aria-label="Search product sections" />
+                <button type="button" class="search-icon" aria-label="Search">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                </div>
+                </button>
 
             </div>
 
@@ -75,7 +75,7 @@
     <nav class="nav">
         <div class="container container-nav">
             <ul>
-                <li class="border-white" id="open-nav-sidebar">
+                <li class="border-white" id="open-nav-sidebar" role="button" tabindex="0" aria-expanded="false" aria-controls="sidebar-container-navigation-id">
                     <span class="open-nav-slider">
                         <i class="fa-solid fa-bars"></i>
                         All
@@ -151,7 +151,7 @@
                 </div>
             </div>
         </div>
-        <button id="sidebar-navigation-close">
+        <button id="sidebar-navigation-close" aria-label="Close menu">
             <i class="fa-solid fa-xmark"></i>
         </button>
     </div>
@@ -176,6 +176,7 @@
 
     <!--product container card-->
     <main class="main">
+        <p id="search-status" role="status" aria-live="polite"></p>
         <div class="card-product-container container">
             <div class="card-product">
                 <h2>Up to 60% off | Styles for Men</h2>
@@ -458,6 +459,7 @@
     </section>
 
     </main>
+    <script src="script.js"></script>
 </body>
 
 </html>
