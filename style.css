@@ -560,3 +560,42 @@ body {
 :focus-visible { outline: 3px solid #f3a847; outline-offset: 3px; }
 #search-status { padding-inline: 24px; }
 @media (prefers-reduced-motion: reduce) { .sidebar-container-navigation { transition: none; } }
+
+/* Keep product discovery and menu controls inside smaller viewports. */
+.container-header { gap: 12px; }
+.search-container { flex: 1; min-width: 0; margin-left: 0; }
+.search-input { min-width: 0; }
+.search-select { flex: 0 0 54px; }
+.search-icon { flex: 0 0 46px; }
+.container-nav { min-width: 0; }
+.container-nav ul { flex: 1; min-width: 0; overflow-x: auto; white-space: nowrap; }
+.container-nav ul li { flex-shrink: 0; }
+.nav-right-image-amazon-prime { flex: 0 0 300px; }
+.card-product-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
+.card-product { min-width: 0; max-width: none; box-shadow: 0 4px 12px rgba(196, 240, 240, 0.5); }
+.card-nested { width: 50%; min-width: 0; padding: 4px; }
+.card-nested img { width: 100%; }
+.sidebar-container-navigation { z-index: 100; }
+.sidebar-left-part { flex: 0 0 min(365px, calc(100% - 64px)); min-width: 0; display: flex; flex-direction: column; }
+.sidebar-wrap { flex: 1; min-height: 0; height: auto; padding-bottom: 24px; }
+#sidebar-navigation-close { flex: 0 0 64px; padding: 16px; }
+
+@media (max-width: 1199px) {
+    .header { height: auto; }
+    .container-header { flex-wrap: wrap; padding: 8px; }
+    .search-container { order: 1; flex: 0 0 100%; }
+    .login-container { margin-left: auto; }
+    .address-container, .language-container, .return-order-container { display: none; }
+    .nav-right-image-amazon-prime { display: none; }
+}
+@media (max-width: 600px) {
+    .logo-container { flex: 0 0 120px; }
+    .login-container .account, .cart-container { font-size: 0.9rem; }
+    .image-item { height: auto; }
+    .image-item img { display: block; height: auto; }
+    .slider-btn { padding: 20px 12px; font-size: 32px; }
+    .main { top: 0; }
+    .today_deals_container { margin: 16px; }
+    .today_deals_heading { flex-wrap: wrap; }
+    .today_deals_heading p a { padding-left: 0; }
+}

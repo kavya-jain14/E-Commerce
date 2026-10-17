@@ -1,0 +1,6 @@
+{
+  "name": "ecommerce-storefront-practice",
+  "private": true,
+  "scripts": {"test": "node --test tests/storefront.test.cjs"},
+  "devDependencies": {"playwright": "1.62.1"}
+}
