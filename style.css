@@ -6,6 +6,19 @@ body {
     margin: 0;
 }
 
+.icon {
+    display: inline-block;
+    vertical-align: middle;
+    width: 1em;
+    height: 1em;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex-shrink: 0;
+}
+
 .header {
     background-color: rgb(19, 25, 33);
     height: 60px;
@@ -185,7 +198,7 @@ body {
     display: flex;
 }
 
-.cart-container i {
+.cart-container .icon {
     font-size: 1rem;
 }
 
@@ -301,10 +314,6 @@ body {
     color: #000;
 }
 
-.slider-btn i {
-    font-weight: 900;
-}
-
 .slider-btn:focus {
     border-color: seagreen;
     box-shadow: -2px -2px 2px rgb(230, 227, 227),
@@ -359,8 +368,8 @@ body {
     margin: 0;
 }
 
-.sidebar-top i {
-    padding-right: 10px;
+.sidebar-top .icon {
+    margin-right: 10px;
     font-size: 25px;
 }
 

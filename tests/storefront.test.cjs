@@ -33,6 +33,9 @@ for (const width of [320, 375, 768, 1440]) {
       const overflow = () => page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);
       assert.equal(await overflow(), false, 'page must not scroll horizontally');
       const search = page.getByRole('searchbox');
+      const searchIcon = page.getByRole('button', {name: 'Search', exact: true}).locator('svg');
+      assert.equal(await searchIcon.isVisible(), true, 'search icon must render without the external font');
+      assert.ok((await searchIcon.evaluate(icon => icon.getBBox().width)) > 0);
       const searchBox = await search.boundingBox();
       assert.ok(searchBox.width >= 140 && searchBox.x >= 0 && searchBox.x + searchBox.width <= width, 'search must fit the viewport');
       await search.fill('clothing');
@@ -44,6 +47,8 @@ for (const width of [320, 375, 768, 1440]) {
       assert.equal(await page.locator('.card-product:visible').count(), 8);
       await page.locator('#open-nav-sidebar').press('Enter');
       const closer = page.getByRole('button', {name: 'Close menu'});
+      assert.equal(await closer.locator('svg').isVisible(), true, 'menu close icon must render without the external font');
+      assert.ok((await closer.locator('svg').evaluate(icon => icon.getBBox().width)) > 0);
       await page.waitForFunction(() => document.activeElement.id === 'sidebar-navigation-close');
       await page.waitForFunction(() => Math.abs(document.getElementById('sidebar-container-navigation-id').getBoundingClientRect().left) < 0.5);
       const closeBox = await closer.boundingBox();
