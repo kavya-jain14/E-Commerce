@@ -24,6 +24,32 @@ before(async () => {
 after(async () => {await browser?.close(); await new Promise(done => server?.close(done));});
 
 for (const width of [320, 375, 768, 1440]) {
+test(`unavailable product photographs use a readable local fallback at ${width}px`, async () => {
+  const page = await browser.newPage({viewport: {width, height: 900}});
+  try {
+    await page.route('**/*', route => route.request().url().startsWith(origin) ? route.continue() : route.abort());
+    await page.goto(origin);
+    const photos = page.locator('.card-nested img, .today_deals_product_item img');
+    assert.equal(await photos.count(), 37);
+    await page.waitForFunction(() => [...document.querySelectorAll('.card-nested img, .today_deals_product_item img')].every(image => image.complete && image.naturalWidth > 0), null, {timeout: 2000});
+    assert.equal(await photos.evaluateAll(images => images.every(image => image.src.endsWith('/images/product-unavailable.svg') && image.alt.includes('image unavailable'))), true);
+    assert.equal(await page.locator('.card-product:visible').count(), 8);
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
+  } finally {await page.close();}
+});
+}
+
+test('available product photographs retain their original sources and product names', async () => {
+  const page = await browser.newPage();
+  try {
+    await page.route('**/*', route => route.request().url().startsWith(origin) ? route.continue() : route.fulfill({contentType: 'image/svg+xml', body: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><rect width="20" height="20" fill="green"/></svg>'}));
+    await page.goto(origin);
+    const photos = page.locator('.card-nested img, .today_deals_product_item img');
+    assert.equal(await photos.evaluateAll(images => images.every(image => image.naturalWidth > 0 && image.src.startsWith('https://') && image.alt === image.parentElement.querySelector('p').textContent.trim())), true);
+  } finally {await page.close();}
+});
+
+for (const width of [320, 375, 768, 1440]) {
   test(`search and menu remain usable at ${width}px`, async () => {
     const page = await browser.newPage({viewport: {width, height: 900}});
     try {

@@ -528,6 +528,11 @@ body {
 .today_deals_product_item p{
     justify-self: flex-end;
 }
+.card-nested img.product-image-unavailable,
+.today_deals_product_item img.product-image-unavailable {
+    object-fit: contain;
+    background: #eef1f4;
+}
 .discount_Contaienr{
      border: 2px solid red; 
 }
