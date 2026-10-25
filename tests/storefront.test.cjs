@@ -23,6 +23,23 @@ before(async () => {
 });
 after(async () => {await browser?.close(); await new Promise(done => server?.close(done));});
 
+test('the header brand remains visible and named without third-party assets', async () => {
+  const page = await browser.newPage({viewport: {width: 375, height: 900}});
+  try {
+    await page.route('**/*', route => route.request().url().startsWith(origin) ? route.continue() : route.abort());
+    await page.goto(origin);
+    const brand = page.getByRole('img', {name: 'Amazon', exact: true});
+    assert.equal(await brand.count(), 1, 'the brand needs an accessible name');
+    assert.equal(await brand.evaluate(element => getComputedStyle(element).backgroundImage.includes('/images/amazon-logo.svg')), true);
+    assert.equal(await page.evaluate(async () => {
+      const image = new Image();
+      image.src = 'images/amazon-logo.svg';
+      await image.decode();
+      return image.naturalWidth > 0;
+    }), true);
+  } finally {await page.close();}
+});
+
 for (const width of [320, 375, 768, 1440]) {
 test(`unavailable product photographs use a readable local fallback at ${width}px`, async () => {
   const page = await browser.newPage({viewport: {width, height: 900}});
