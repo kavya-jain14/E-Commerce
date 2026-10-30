@@ -570,6 +570,11 @@ body {
     outline: none;
     background-color: rgb(255,255,255,0.4);
 }
+
+.today_deal_btn:disabled {
+    opacity: 0.35;
+    cursor: default;
+}
 [hidden] { display: none !important; }
 .search-icon { border: 0; cursor: pointer; }
 :focus-visible { outline: 3px solid #f3a847; outline-offset: 3px; }

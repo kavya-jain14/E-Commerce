@@ -67,6 +67,37 @@ test('available product photographs retain their original sources and product na
 });
 
 for (const width of [320, 375, 768, 1440]) {
+  test(`deal controls reveal hidden products and respect list bounds at ${width}px`, async () => {
+    const page = await browser.newPage({viewport: {width, height: 900}});
+    try {
+      await page.route('**/*', route => route.request().url().startsWith(origin) ? route.continue() : route.abort());
+      await page.goto(origin);
+      const list = page.locator('.today_deals_product_list');
+      const previous = page.locator('#today_deal_btn_prev');
+      const next = page.locator('#today_deal_btn_next');
+      const overflow = await list.evaluate(element => element.scrollWidth > element.clientWidth + 1);
+      if (overflow) {
+        await next.click();
+        await page.waitForFunction(() => document.querySelector('.today_deals_product_list').scrollLeft > 0, null, {timeout: 1500});
+        for (let attempt = 0; attempt < 10 && !(await next.isDisabled()); attempt++) {
+          await next.click();
+          await page.waitForTimeout(350);
+        }
+        assert.equal(await next.isDisabled(), true);
+        assert.equal(await list.evaluate(element => Math.abs(element.scrollWidth - element.clientWidth - element.scrollLeft) <= 1), true);
+        for (let attempt = 0; attempt < 10 && !(await previous.isDisabled()); attempt++) {
+          await previous.click();
+          await page.waitForTimeout(350);
+        }
+      }
+      assert.equal(await previous.isDisabled(), true);
+      assert.equal(await list.evaluate(element => element.scrollLeft), 0);
+      assert.equal(await next.isDisabled(), !overflow);
+      assert.equal(await next.getAttribute('aria-label'), 'Next deals');
+      assert.equal(await previous.getAttribute('aria-label'), 'Previous deals');
+      assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
+    } finally {await page.close();}
+  });
   test(`search and menu remain usable at ${width}px`, async () => {
     const page = await browser.newPage({viewport: {width, height: 900}});
     try {

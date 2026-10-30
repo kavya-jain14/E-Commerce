@@ -36,6 +36,25 @@ function filterProducts() {
 search.addEventListener('input', filterProducts);
 document.querySelector('.search-icon').addEventListener('click', filterProducts);
 
+const deals = document.querySelector('.today_deals_product_list');
+const previousDeals = document.getElementById('today_deal_btn_prev');
+const nextDeals = document.getElementById('today_deal_btn_next');
+function updateDealControls() {
+  previousDeals.disabled = deals.scrollLeft <= 1;
+  nextDeals.disabled = deals.scrollLeft >= deals.scrollWidth - deals.clientWidth - 1;
+}
+function moveDeals(direction) {
+  deals.scrollBy({
+    left: direction * deals.clientWidth,
+    behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+  });
+}
+previousDeals.addEventListener('click', () => moveDeals(-1));
+nextDeals.addEventListener('click', () => moveDeals(1));
+deals.addEventListener('scroll', updateDealControls);
+window.addEventListener('resize', updateDealControls);
+updateDealControls();
+
 // A failed third-party photo must still identify the product and keep its space.
 for (const image of document.querySelectorAll('.card-nested img, .today_deals_product_item img')) {
   const label = image.parentElement.querySelector('p')?.textContent.trim() || 'Product';

@@ -2,6 +2,8 @@
 
 A static storefront exercise built with HTML, CSS and JavaScript. Search filters the eight product sections; the All menu supports keyboard opening, Escape dismissal and focus return. The account, cart, product and promotion links are layout examples.
 
+The Today's Deals arrows page through the existing product list and disable at its bounds or when every deal fits. Motion follows the browser's reduced-motion preference. Browser checks cover reaching both ends at all four widths.
+
 Serve this directory with any static web server, for example:
 
 ```sh
